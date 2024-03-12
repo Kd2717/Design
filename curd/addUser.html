@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome</title>
+ 
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .mandatory-symbol{
+        color: red;
+    }
+</style>
+</head>
+
+<body id="details" style="  background-image: linear-gradient(to right, #dc3545 , #d3bbaf4d);">
+    <div style="padding: 70px ">
+        <h3>All the user details</h3>
+        <br />
+        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight">Add Info</button><br></br>
+           
+        <table class="table table-striped" id="userTable">
+            <thead>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>MiddleName</th>
+                <th>Email ID</th>
+                <th>Mobile number</th>
+                <th>Address</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Country Of Birth</th>
+                <th>Active</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Personal Details</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form style="padding: 5px;">
+                <div class="mb-3">
+                    <label class="form-label">First Name <span class="mandatory-symbol" >*</span></label>
+                    <input  type="text" class="form-control" id="first_name" oninput="clearValidation('usernameError')">
+                    <div id="usernameError" style="color: red;"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" id="middle_name" oninput="clearValidation('middleNameError')">
+                    <div id="middleNameError" style="color: red;"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Last Name <span class="mandatory-symbol">*</span></label>
+                    <input  type="text" class="form-control" id="last_name" oninput="clearValidation('lastNameError')">
+                    <div id="lastNameError" style="color: red;"></div>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Email <span class="mandatory-symbol">*</span></label>
+                    <input type="text" class="form-control" id="email" oninput="clearValidation('emailError')">
+                    <div id="emailError" style="color: red;"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mobile Number <span class="mandatory-symbol">*</span></label>
+                    <input type="text" class="form-control" id="Mobile_number"  oninput="clearValidation('mobileError')">
+                    <div id="mobileError" style="color: red;"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" oninput="clearValidation('addressError')">
+                    <div id="addressError" style="color: red;"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">DOB<span class="mandatory-symbol">*</span></label>
+                    <input type="date" class="form-control" id="dob" oninput="clearValidation('dobError')">
+                    <div id="dobError" style="color: red;"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gender <span class="mandatory-symbol">*</span></label>
+                    <input type="radio" id="gender" name="gender" value="male"  oninput="clearValidation('genderError')">Male
+                    <input type="radio" id="gender" name="gender" value="female"  oninput="clearValidation('genderError')">Female
+                    <div style="color: red;" id="genderError"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Country Of Birth <span class="mandatory-symbol">*</span></label>
+                    <select id="country" class="form-control" oninput="clearValidation('countryError')">
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="UK">UK</option>
+                   </select>
+                   <div  style="color: red;" id="countryError"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Active</label>
+                    <input type="checkbox" oninput="clearValidation('activeError')" id="active"/>
+                    <div style="color: red;" id="activeError"></div>
+                </div>
+                <button class="btn btn-primary" id="savebtn" onclick="return saveUserInfo()">Save</button>
+            </form>
+        </div>
+    </div>
+  
+ 
+    <script>
+      
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUserDetails();
+        });
+
+        function saveUserInfo() {
+            debugger
+            var firstName = document.getElementById('first_name').value;
+            var middleName = document.getElementById('middle_name').value;
+            var lastName = document.getElementById('last_name').value;
+            var Email = document.getElementById('email').value;
+            var MobileNumber = document.getElementById('Mobile_number').value;
+
+            var Address = document.getElementById('address').value;
+            var Dob = document.getElementById('dob').value;
+            var Gender = document.querySelector('input[name="gender"]:checked');
+            var Active = document.getElementById('active').checked;
+            var country = document.getElementById('country').value;
+       
+            var emailRegex= /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+            var mobileRegex =/^\d{10}$/;
+            
+          if (firstName.trim() === '') {
+            document.getElementById('usernameError').innerText = 'First Name is required';
+            
+          }
+          if (middleName.trim() === '') {
+            document.getElementById('middleNameError').innerText = 'Middle Name is required';
+           
+          }
+           if(lastName.trim() === ''){
+            document.getElementById('lastNameError').innerText = "Last Name is required"
+           }
+            
+          if(Email.trim() === ''){
+            document.getElementById('emailError').innerText = "Email is required"
+           
+          }else if(!emailRegex.test(Email)){
+            document.getElementById('emailError').innerText = "Valid Pattern"
+          }
+
+          if(MobileNumber.trim() === ''){
+            document.getElementById('mobileError').innerText = "Mobile Number is required"
+          }else if(!mobileRegex.test(MobileNumber)){
+            document.getElementById('mobileError').innerText = "Numeric only allowed"
+          }
+
+          if(Address.trim() === ''){
+            document.getElementById('addressError').innerText = "Address is required"
+          }
+          if(Dob.trim() === ''){
+            document.getElementById('dobError').innerText = "DOB is required"
+           
+          }
+          if (!Gender) {
+            document.getElementById('genderError').innerText = 'Gender is required';
+           
+        }
+        if (!country) {
+            document.getElementById('countryError').innerText = 'Country is required';
+            return false;
+        }
+         if (!Active) {
+            document.getElementById('activeError').innerText = 'Active is required';
+            return false;
+        }
+
+   
+    var userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
+
+   
+    userDetails.push({
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName,
+        Email:Email,
+        MobileNumber:MobileNumber,
+        Address:Address,
+        Dob:Dob,
+        Gender: Gender.value,
+        country:country,
+        Active:Active
+
+    });
+ 
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+    
+    loadUserDetails();
+
+    
+    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
+    offcanvas.hide();
+
+  
+    clearValidation('username');
+    clearValidation('middleNameError');
+    clearValidation('lastNameError');
+    clearValidation('emailError');
+    clearValidation('mobileError');
+    clearValidation('addressError');
+    clearValidation('dobError');
+    clearValidation('genderError');
+    clearValidation('countryError')
+    clearValidation('activeError');
+
+    
+}
+
+
+        function loadUserDetails() {
+            var userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
+            var tableBody = document.querySelector('#userTable tbody');
+            tableBody.innerHTML = '';
+
+            for (var i = 0; i < userDetails.length; i++) {
+                var row = tableBody.insertRow(i);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                var cell9 = row.insertCell(8);
+                var cell10 = row.insertCell(9);
+                var cell11 = row.insertCell(10);
+                var cell12 = row.insertCell(11)
+
+
+                cell1.innerHTML = userDetails[i].firstName;
+                cell2.innerHTML = userDetails[i].middleName;
+                cell3.innerHTML = userDetails[i].lastName;
+                cell4.innerHTML = userDetails[i].Email;
+                cell5.innerHTML = userDetails[i].MobileNumber;
+                cell6.innerHTML = userDetails[i].Address;
+                cell7.innerHTML = userDetails[i].Dob;
+                cell8.innerHTML = userDetails[i].Gender;
+                cell9.innerHTML = userDetails[i].country;
+                cell10.innerHTML = userDetails[i].Active;
+                cell11.innerHTML = '<button class="btn btn-secondary" onclick="editUserInfo(' + i + ')">Edit</button>';
+                cell12.innerHTML = '<button class="btn btn-danger" onclick="deleteUserInfo(' + i + ')">Delete</button>';
+            }
+        }
+
+        function editUserInfo(index) {
+            // debugger    
+           
+            var userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
+            var user = userDetails[index];
+
+            document.getElementById('first_name').value = user.firstName;
+            document.getElementById('middle_name').value = user.middleName;
+            document.getElementById('last_name').value = user.lastName;
+            document.getElementById('email').value = user.Email;
+            document.getElementById('Mobile_number').value = user.MobileNumber;
+            document.getElementById('address').value = user.Address;
+            document.getElementById('dob').value = user.Dob;
+            document.getElementById('country').value = user.country;
+            // document.getElementById('gender').value = user.Gender;
+            // document.getElementById('active').checked = user.Active;
+            var genderRadios = document.getElementsByName('gender');
+            for (var i = 0; i < genderRadios.length; i++) {
+                debugger
+             if (genderRadios[i].value === user.Gender) {
+            genderRadios[i].checked = true;
+            break;
+                }
+            }
+            document.getElementById('active').checked = user.Active;
+   
+  
+
+
+          
+            userDetails.splice(index, 1);
+            localStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+         
+            loadUserDetails();
+
+          
+            var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
+            offcanvas.show();
+        }
+
+        function deleteUserInfo(index) {
+         
+            var userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
+            userDetails.splice(index, 1);
+            localStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+           
+            loadUserDetails();
+        }
+        
+        function clearValidation(elementId) {
+          document.getElementById(elementId).innerText = '';
+        }
+    </script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+
