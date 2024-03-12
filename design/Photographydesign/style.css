@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+    /* font-family: 'poppins', sans-serif; */
+    font-family: math; 
+    box-sizing: border-box;
+    
+}
+section{
+    min-height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+span{
+    color: blue;
+    font-weight: bold;
+}
+
+/* navbar */
+.bold{
+    letter-spacing: 1px;
+    font-size: 187%;
+    font-family: system-ui !important;
+   
+}
+li{
+    padding: 5px;
+}
+.nav-link{
+    font-size: 15px;
+    color: black;
+    font-weight: bold;
+    border: 2px solid transparent;
+}
+.nav-link:hover{
+    border-bottom: 2px solid black;
+    transition: .1s;
+}
+/* video above letter */
+#home{
+    position: relative;
+}
+
+#home video {
+    width: 100%;
+    display: block;
+    filter: blur(3px);
+}
+
+.overlay-text {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #00000094;
+    font-size: 4em;
+    text-align: center;
+    font-family: math;
+
+}
+/* paragraph */
+#paragraph{
+    color: black;
+    font-size: large;
+    font-family: cursive;
+}
+
+/* card */
+
+.card-title {
+    margin-bottom: 0.5rem;
+    color: black;
+    font-family: math;
+}
+.card-text{
+    color: black;
+    font-family: math;
+}
+#footer{
+    background-color: #926339;
+    margin-top: 8%;
+}
+
+.image-fulid{
+    height: 116%;
+    margin-top: -46px;
+    width: 68%;
+}
